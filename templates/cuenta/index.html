@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLOG - INFORMATORIO</title>
+</head>
+<body>
+    <h1>Opciones de cuenta de usuario</h1>
+    {% if user.is_authenticated %}
+    <li>
+        <!--<ol><a href="cambiarEmail/">Cambiar e-mail</a></ol>-->
+        <ol><a href="cambiarPassword/">Cambiar contraseña</a></ol>
+        <ol><a href="cerrar/">Cerrar sesión</a></ol>
+    </li>
+    {% else %}
+    <p>Sección solo válida para usuarios autenticados.</p>
+    {% endif %}
+</body>
+</html>
