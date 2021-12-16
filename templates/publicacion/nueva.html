@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Blog entries-->
+<div class="col-lg-8">
+    <!-- Featured blog post-->
+    {% if user.is_authenticated %}
+    <div class="card mb-4">
+        <h1>Nueva publicación</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-primary" value="Publicar" />
+        </form>
+    </div>
+    {% else %}
+    <div class="alert alert-danger" role="alert">Esta sección es solo para usuarios autorizados.</div>
+    {% endif %}
+</div>
+{% endblock %}

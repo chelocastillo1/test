@@ -19,12 +19,12 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 
 #logger = logging.getLogger(__name__)
 
-# Función que se encargará de mostrar la página principal de la web (creo que no debería estar acá)
-def index(request):
-    template = 'index.html'
-    contexto = {}
+# # Función que se encargará de mostrar la página principal de la web (creo que no debería estar acá)
+# def index(request):
+#     template = 'index.html'
+#     contexto = {}
 
-    return render(request, template, contexto)
+#     return render(request, template, contexto)
 
 # Mostrará la sección con las opciones de edición de cuenta de usuario.
 # Opciones como cambiar clave, cambiar e-mail, nombre/apellido

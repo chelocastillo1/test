@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>BLOG - INFORMATORIO</title>
+        {% load bootstrap5 %}
+
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+        
+        {% bootstrap_css %}
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    </head>
+    <body>
+        
+        <!-- Responsive navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'index' %}">BLOG</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        {% with request.resolver_match.url_name as url_name %}
+                        <li class="nav-item"><a class="nav-link {% if url_name == 'index' %}active{% endif %}" href="{% url 'index' %}">Inicio</a></li>
+                        <!--<li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>-->
+                        <li class="nav-item"><a class="nav-link {% if url_name == 'nosotros' %}active{% endif %}" href="{% url 'nosotros' %}">Nosotros</a></li>
+                        {% endwith %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Page header with logo and tagline-->
+        <header class="py-5 bg-light border-bottom mb-4">
+            <div class="container">
+                <div class="text-center my-5">
+                    <h1 class="fw-bolder">Welcome to Blog Home!</h1>
+                    <p class="lead mb-0">A Bootstrap 5 starter layout for your next blog homepage</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page content-->
+        <div class="container">
+            <div class="row">
+                {% block content %}{% endblock %}
+                <!-- Side widgets-->
+                <div class="col-lg-4">
+                    <!-- Search widget-->
+                    <!--<div class="card mb-4">
+                        <div class="card-header">Search</div>
+                        <div class="card-body">
+                            <div class="input-group">
+                                <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                                <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                            </div>
+                        </div>
+                    </div>-->
+                    <!-- Categories widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Panel de usuario</div>
+                        <div class="card-body">
+                            <div class="row">
+                                {% if user.is_authenticated %}
+                                <p>Hola {{ user.get_username }}, estas son tus opciones.</p>
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <!-- de aquí -->
+                                        {% with tipoUsuario=0 %}
+                                            {% for grupo in user.groups.all %}
+                                                {% if grupo == 'Administrador' %}
+                                                    {% with tipoUsuario=1 %}
+                                                    <p>{{ grupo }}</p>
+                                                    {% endwith %}
+                                                {% endif %}
+                                                {% if grupo == 'Escritor' %}
+                                                    {% with tipoUsuario=2 %}
+                                                    <p>{{ grupo }}</p>
+                                                    {% endwith %}
+                                                {% endif %}
+                                                {% if grupo == 'Lector' %}
+                                                    {% with tipoUsuario=3 %}
+                                                    <p>{{ grupo }}</p>
+                                                    {% endwith %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endwith %}
+                                        <!-- hasta aquí no funciona -->
+                                        {# if 'Escritor' in user.groups #}
+                                        <li><a href="{% url 'publicacion_nueva' %}">Nueva publicación</a></li>
+                                        {# endif #}
+                                        <li></li>
+                                        <li><a href="{% url 'cuenta' %}">Perfil</a></li>
+                                        <li><a href="{% url 'cambiarPassword' %}">Cambiar contraseña</a></li>
+                                        <li><a href="#{# url 'cambiarPassword' #}">Cambiar e-mail</a></li>
+                                        <li><a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a></li>
+                                    </ul>
+                                </div>
+                                {% else %}
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="{% url 'iniciar_sesion' %}">Iniciar sesión</a></li>
+                                        <li><a href="{% url 'cuenta_registrar' %}">Registrarse</a></li>
+                                    </ul>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-header">Categorías</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="#!">Web Design</a></li>
+                                        <li><a href="#!">HTML</a></li>
+                                        <li><a href="#!">Freebies</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="#!">JavaScript</a></li>
+                                        <li><a href="#!">CSS</a></li>
+                                        <li><a href="#!">Tutorials</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Side widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Side Widget</div>
+                        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; BLOG - INFORMATORIO 2021</p></div>
+        </footer>
+
+        <!-- Bootstrap core JS-->
+        {% bootstrap_javascript %}
+
+        <!-- Core theme JS-->
+        <script src="{% static 'js/scripts.js' %}"></script>
+    </body>
+</html>

@@ -1,6 +1,11 @@
 from django import views
-from cuenta import views
+#from django.conf import settings
+from django.contrib import admin
 from django.shortcuts import redirect
+from django.urls import path
+
+from publicacion.models import Publicacion
+import cuenta.views, publicacion.views
 
 """blog URL Configuration
 
@@ -17,20 +22,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls), # sitio de administración
 
-    path('', views.index),
+    path('', publicacion.views.index, name='index'), # inicio de la web
+    path('nosotros', publicacion.views.nosotros, name='nosotros'), # inicio de la web
 
-    path('cuenta/', views.cuenta),
-    path('cuenta/registrar/', views.registrar),
-    path('cuenta/iniciar/', views.iniciar_sesion),
-    path('cuenta/cerrar/', views.cerrar_sesion),
-    path('cuenta/cambiarPassword/', views.cambiarPassword),
+    path('blog/post/nueva/', publicacion.views.nueva, name='publicacion_nueva'),
+    path('blog/post/editar/<int:id>', publicacion.views.editar, name='publicacion_editar'),
+    path('blog/post/eliminar/<int:id>', publicacion.views.eliminar, name='publicacion_eliminar'),
+    path('blog/post/<int:id>/', publicacion.views.ver, name='publicacion_ver'),
+
+    path('cuenta/', cuenta.views.cuenta, name="cuenta"),
+    path('cuenta/registrar/', cuenta.views.registrar, name="cuenta_registrar"),
+    path('cuenta/iniciar/', cuenta.views.iniciar_sesion, name="iniciar_sesion"),
+    path('cuenta/cerrar/', cuenta.views.cerrar_sesion, name="cerrar_sesion"),
+    path('cuenta/cambiarPassword/', cuenta.views.cambiarPassword, name="cambiarPassword"),
     #path('cuenta/cambiaEmail/', views.cambiarEmail),
-    #path('cuenta/creada/', views.cuenta_creada),
-    
+    #path('cuenta/creada/', views.cuenta_creada),    
 ]

@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-%=e$p3f-d@2py+1cfam#1*g4*_ebg@m(j1(ob_ic5o*@isprfm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [   '127.0.0.1',
+                    'localhost',
+                ]
 
 
 # Application definition
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cuenta.apps.CuentaConfig',
     'publicacion.apps.PublicacionConfig',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -117,10 +120,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIR = (
-                    os.path.join(os.path.dirname(BASE_DIR), 'static'),
-                  )
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+
+STATIC_URL = '/static/'
+STATICFILES_DIR = (BASE_DIR / 'static', )
+#STATICFILES_DIR = (os.path.join(os.path.dirname(BASE_DIR), 'static'), )
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media')
@@ -131,3 +136,11 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
+#AUTH_USER_MODEL = 'cuenta.Usuario'
